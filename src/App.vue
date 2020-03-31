@@ -1,21 +1,18 @@
 <template>
   <div id="app">
     <nav>
-      <a href="#/html/">Home</a> |
-      <a href="#/css/">Noten</a> |
+      <router-link class="navlink" to="/">Home</router-link>
+      <span class="navlink">|</span>
+      <router-link class="navlink" to="/noten">Noten</router-link>
     </nav>
-    <Home name="Özcan Altin" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Home from "./components/Home.vue";
-
 export default {
   name: "App",
-  components: {
-    Home
-  },
+  components: {},
   data() {
     return {
       meineVariable: "xxxXXXxxxXXXxxx"
@@ -31,6 +28,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+nav {
+  background-color: aquamarine;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.navlink {
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 25px;
 }
 </style>
