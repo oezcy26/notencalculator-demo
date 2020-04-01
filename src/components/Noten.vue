@@ -7,13 +7,13 @@
       </ul>
       <div>
         <label>Neue Note:</label>
-        <input type="text" v-model="neueNote" />
+        <input type="number" v-model="neueNote" />
         <button @click="addNote()">Ok</button>
       </div>
       <br />
       <br />
       <br />
-      <div>Mein Notendurchschnitt: {{calcAvg()}}</div>
+      <div>Mein Notendurchschnitt:{{calcAvg() | round(1)}}</div>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       noten: [],
-      neueNote: 0,
+      neueNote: null,
       avg: 0
     };
   },
@@ -35,24 +35,29 @@ export default {
         this.noten = [];
       }
       this.noten.push(this.neueNote);
-      localStorage.noten = JSON.stringify(this.noten);
-      this.neueNote = 0;
+      this.neueNote = null;
+
+      //Abspeichern der Noten im LocalStorage des Browsers
+      localStorage.setItem("noten", JSON.stringify(this.noten));
     },
     calcAvg: function() {
       let sum = 0;
-      //iteriere über alle Noten und zähle zusammen
-      for (var i = 0; i < this.noten.length; i++) {
-        let zahl = parseInt(this.noten[i]);
-        sum = sum + zahl;
-      }
-      //berechne durchschnitt und gebe aus
-      console.log(sum);
-      console.log(this.noten.length);
+
+      this.noten.forEach(element => {
+        sum = sum + parseFloat(element);
+      });
+
       return sum / this.noten.length;
     }
   },
+  filters: {
+    round(value, pos) {
+      return value.toFixed(pos);
+    }
+  },
   mounted() {
-    this.noten = JSON.parse(localStorage.noten);
+    let item = localStorage.getItem("noten");
+    this.noten = JSON.parse(item);
   }
 };
 </script>
