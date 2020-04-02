@@ -1,60 +1,25 @@
 <template>
   <div>
-    <h2>Noten-Calculator</h2>
-    <div id="app">
-      <ul>
-        <li v-for="(n,idx) in noten" v-bind:key="idx">{{idx+1}}. Note : {{n}}</li>
-      </ul>
-      <div>
-        <label>Neue Note:</label>
-        <input type="number" v-model="neueNote" />
-        <button @click="addNote()">Ok</button>
-      </div>
-      <br />
-      <br />
-      <br />
-      <div>Mein Notendurchschnitt:{{calcAvg() | round(1)}}</div>
-    </div>
+    <Fach title="Mathematik"></Fach>
+    <hr />
+    <Fach title="Deutsch"></Fach>
+    <hr />
+    <Fach title="M306"></Fach>
   </div>
 </template>
 
 <script>
+import Fach from "./Fach.vue";
+
 export default {
   name: "Noten",
-  props: {},
+  components: { Fach },
   data() {
     return {
-      noten: [],
-      neueNote: null,
-      avg: 0
+      faecher: ["Mathematik", "M306", "Deutsch"]
     };
   },
-  methods: {
-    addNote: function() {
-      if (!this.noten) {
-        this.noten = [];
-      }
-      this.noten.push(this.neueNote);
-      this.neueNote = null;
-
-      //Abspeichern der Noten im LocalStorage des Browsers
-      localStorage.setItem("noten", JSON.stringify(this.noten));
-    },
-    calcAvg: function() {
-      let sum = 0;
-
-      this.noten.forEach(element => {
-        sum = sum + parseFloat(element);
-      });
-
-      return sum / this.noten.length;
-    }
-  },
-  filters: {
-    round(value, pos) {
-      return value.toFixed(pos);
-    }
-  },
+  methods: {},
   mounted() {
     let item = localStorage.getItem("noten");
     this.noten = JSON.parse(item);
