@@ -13,8 +13,7 @@
 
       <br />
       <div>
-        <b>{{this.title}}-&#8709;</b>
-        {{calcAvg() | round(1)}}
+        <b>&#8709; {{calcAvg() | round(1)}}</b>
       </div>
       <br />
     </div>

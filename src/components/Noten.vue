@@ -5,6 +5,8 @@
     <Fach title="Deutsch"></Fach>
     <hr />
     <Fach title="M306"></Fach>
+    <hr />
+    <Fach title="M307"></Fach>
   </div>
 </template>
 
