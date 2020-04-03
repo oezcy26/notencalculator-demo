@@ -1,12 +1,17 @@
 <template>
   <div>
-    <Fach title="Mathematik"></Fach>
-    <hr />
-    <Fach title="Deutsch"></Fach>
-    <hr />
-    <Fach title="M306"></Fach>
-    <hr />
-    <Fach title="M307"></Fach>
+    <b-container>
+      <b-row>
+        <b-col>
+          <Fach title="M306"></Fach>
+          <Fach title="M307"></Fach>
+        </b-col>
+        <b-col>
+          <Fach title="Mathematik"></Fach>
+          <Fach title="Deutsch"></Fach>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 

@@ -1,23 +1,22 @@
 <template>
-  <div>
-    <h2>{{title}}</h2>
-    <div id="app">
-      <ul>
-        <li v-for="(n,idx) in noten" v-bind:key="idx">{{idx+1}}. Note : {{n}}</li>
-      </ul>
-      <div>
+  <b-card no-body>
+    <b-card-header>
+      <b-button variant="primary" block v-b-toggle="title">{{title}}</b-button>
+    </b-card-header>
+    <b-collapse :id="title">
+      <b-card-body>
+        <ul>
+          <li v-for="(n,idx) in noten" v-bind:key="idx">{{idx+1}}. Note : {{n}}</li>
+        </ul>
         <label>Neue Note:</label>
         <input type="number" v-model="neueNote" />
         <button @click="addNote()">Ok</button>
-      </div>
-
-      <br />
-      <div>
-        <b>&#8709; {{calcAvg() | round(1)}}</b>
-      </div>
-      <br />
-    </div>
-  </div>
+        <p>
+          <b>&#8709; {{calcAvg() | round(1)}}</b>
+        </p>
+      </b-card-body>
+    </b-collapse>
+  </b-card>
 </template>
 
 <script>

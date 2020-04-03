@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link class="navlink" to="/">Home</router-link>
-      <span class="navlink">|</span>
-      <router-link class="navlink" to="/noten">Noten</router-link>
-    </nav>
+    <b-navbar variant="dark" type="dark" style="font-size:20px;">
+      <b-navbar-nav>
+        <b-nav-item v-bind:class="{active: getRoute() == 'Home'}" href="#/">Home</b-nav-item>
+
+        <b-nav-item v-bind:class="{active: getRoute() == 'Noten'}" href="#/noten">Noten</b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
     <router-view />
   </div>
 </template>
@@ -17,6 +19,11 @@ export default {
     return {
       meineVariable: "xxxXXXxxxXXXxxx"
     };
+  },
+  methods: {
+    getRoute() {
+      return this.$route.name;
+    }
   }
 };
 </script>
