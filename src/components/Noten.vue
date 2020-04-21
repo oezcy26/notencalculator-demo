@@ -10,7 +10,7 @@
         <b-col>
           <span>ÜK-Module</span>
           <Fach title="M417"></Fach>
-          <Fach title="M404"></Fach>
+          <Fach title="M404"></Fach>test-änderung
         </b-col>
         <b-col>
           <span>Schulfächer</span>
