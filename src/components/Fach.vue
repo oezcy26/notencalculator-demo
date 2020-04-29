@@ -1,16 +1,19 @@
 <template>
   <b-card no-body>
     <b-card-header>
-      <b-button variant="primary" block v-b-toggle="title">{{title}}</b-button>
+      <b-button variant="primary" block v-b-toggle="fach.id.toString()">{{fach.name}}</b-button>
     </b-card-header>
-    <b-collapse :id="title">
+    <b-collapse :id="fach.id.toString()">
       <b-card-body>
         <ul>
-          <li v-for="(n,idx) in noten" v-bind:key="idx">{{idx+1}}. Note : {{n}}</li>
+          <li v-for="(n,idx) in fach.noten" v-bind:key="idx">{{n.name}} : {{n.wert}}</li>
         </ul>
         <label>Neue Note:</label>
-        <input type="number" v-model="neueNote" />
-        <button @click="addNote()">Ok</button>
+        <b-input-group>
+          <b-form-input v-model="neueNote.name" type="text" placeholder="Titel"></b-form-input>
+          <b-form-input v-model="neueNote.wert" type="number" step="0.1" placeholder="Wert"></b-form-input>
+          <b-button @click="addNote()">Ok</b-button>
+        </b-input-group>
         <p>
           <b>&#8709; {{calcAvg() | round(1)}}</b>
         </p>
@@ -23,34 +26,36 @@
 export default {
   name: "Fach",
   props: {
-    title: String
+    fach: Object
   },
   data() {
     return {
       noten: [],
-      neueNote: null,
+      neueNote: {},
       avg: 0
     };
   },
   methods: {
     addNote: function() {
-      if (!this.noten) {
-        this.noten = [];
+      if (!this.fach.noten) {
+        this.fach.noten = [];
       }
-      this.noten.push(this.neueNote);
-      this.neueNote = null;
-
-      //Abspeichern der Noten im LocalStorage des Browsers
-      localStorage.setItem(this.title, JSON.stringify(this.noten));
+      this.fach.noten.push(this.neueNote);
+      this.neueNote = {};
     },
     calcAvg: function() {
       let sum = 0;
+      if (this.fach.noten) {
+        this.fach.noten.forEach(element => {
+          console.log;
+          sum = sum + parseFloat(element.wert);
+        });
+        console.log("sum" + sum);
 
-      this.noten.forEach(element => {
-        sum = sum + parseFloat(element);
-      });
-
-      return sum / this.noten.length;
+        return sum / this.fach.noten.length;
+      } else {
+        return 0;
+      }
     }
   },
   filters: {
@@ -58,10 +63,7 @@ export default {
       return value.toFixed(pos);
     }
   },
-  mounted() {
-    let item = localStorage.getItem(this.title);
-    this.noten = JSON.parse(item);
-  }
+  mounted() {}
 };
 </script>
 

@@ -3,19 +3,14 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <span>INF-Module</span>
-          <Fach title="M306"></Fach>
-          <Fach title="M307"></Fach>
+          <h4>INF-Module</h4>
+          <Fach :fach="f" v-for="(f,idx) in faecher" :key="idx"></Fach>
         </b-col>
         <b-col>
-          <span>ÜK-Module</span>
-          <Fach title="M417"></Fach>
-          <Fach title="M404"></Fach>test-änderung
+          <h4>ÜK-Module</h4>
         </b-col>
         <b-col>
-          <span>Schulfächer</span>
-          <Fach title="Mathematik"></Fach>
-          <Fach title="Deutsch"></Fach>
+          <h4>Schulfächer</h4>
         </b-col>
       </b-row>
     </b-container>
@@ -24,19 +19,25 @@
 
 <script>
 import Fach from "./Fach.vue";
+import axios from "axios";
 
 export default {
   name: "Noten",
   components: { Fach },
   data() {
     return {
-      faecher: ["Mathematik", "M306", "Deutsch"]
+      faecher: []
     };
   },
-  methods: {},
+  methods: {
+    async getFaecher() {
+      let resp = await axios.get("/api/faecher");
+      let faecher = resp.data;
+      this.faecher = faecher;
+    }
+  },
   mounted() {
-    let item = localStorage.getItem("noten");
-    this.noten = JSON.parse(item);
+    this.getFaecher();
   }
 };
 </script>
