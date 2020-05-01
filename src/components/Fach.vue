@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Fach",
   props: {
@@ -36,10 +38,18 @@ export default {
     };
   },
   methods: {
-    addNote: function() {
+    addNote: async function() {
       if (!this.fach.noten) {
         this.fach.noten = [];
       }
+      // Die Note dem Fach zuordnen
+      this.neueNote.fach_id = this.fach.id;
+
+      // abspeichern und id erhalten
+      let id = await axios.post("/api/note", this.neueNote);
+      this.neueNote.id = id;
+
+      // note ins array und neueNote zurücksetzen
       this.fach.noten.push(this.neueNote);
       this.neueNote = {};
     },
@@ -47,10 +57,8 @@ export default {
       let sum = 0;
       if (this.fach.noten) {
         this.fach.noten.forEach(element => {
-          console.log;
           sum = sum + parseFloat(element.wert);
         });
-        console.log("sum" + sum);
 
         return sum / this.fach.noten.length;
       } else {
