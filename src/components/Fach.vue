@@ -6,7 +6,10 @@
     <b-collapse :id="fach.id.toString()">
       <b-card-body>
         <ul>
-          <li v-for="(n,idx) in fach.noten" v-bind:key="idx">{{n.name}} : {{n.wert}}</li>
+          <li v-for="(n,idx) in fach.noten" v-bind:key="idx">
+            {{n.name}} : {{n.wert}}
+            <button @click="deleteNote(idx)">-</button>
+          </li>
         </ul>
         <label>Neue Note:</label>
         <b-input-group>
@@ -32,7 +35,6 @@ export default {
   },
   data() {
     return {
-      noten: [],
       neueNote: {},
       avg: 0
     };
@@ -46,12 +48,18 @@ export default {
       this.neueNote.fach_id = this.fach.id;
 
       // abspeichern und id erhalten
-      let id = await axios.post("/api/note", this.neueNote);
-      this.neueNote.id = id;
+      let res = await axios.post("/api/note", this.neueNote);
+      this.neueNote.id = res.data[0];
 
       // note ins array und neueNote zurücksetzen
       this.fach.noten.push(this.neueNote);
       this.neueNote = {};
+    },
+    deleteNote: async function(idx) {
+      let notenId = this.fach.noten[idx].id;
+      await axios.delete("/api/note/" + notenId);
+
+      this.fach.noten.splice(idx, 1);
     },
     calcAvg: function() {
       let sum = 0;
